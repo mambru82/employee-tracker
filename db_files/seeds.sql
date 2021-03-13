@@ -1,15 +1,33 @@
-INSERT INTO authors (firstName, lastName)
+INSERT INTO department (dept_name)
 VALUES
-    ('Jane', 'Austen'),
-    ('Mark', 'Twain'),
-    ('Lewis', 'Carroll'),
-    ('Andre', 'Asselin');
+    ('Sales'),
+    ('Engineering'),
+    ('Legal'),
+    ('Finance');
 
-INSERT INTO books (title, authorId)
+INSERT INTO employee_role (title, salary, department_id)
 VALUES  
-    ('Pride and Prejudice', 1),
-    ('Emma', 1),
-    ('The Adventures of Tom Sawyer', 2),
-    ('Adventures of Huckleberry Finn', 2),
-    ("Alice's Adventures in Wonderland", 3),
-    ('Dracula', null);
+    ('Sales Lead', 100000, 1),
+    ('Salesperson', 80000, 1),
+    ('Sales Manager', 150000, 1),
+    ('Software Engineer', 120000, 2),
+    ('Lead Engineer', 150000, 2),
+    ('Engineering VP', 250000, 2),
+    ('Paralegal', 45000, 3),
+    ('Lawyer', 190000, 3),
+    ('Legal Team Lead', 350000, 3),
+    ('Accountant', 125000, 4),
+    ('Lead Accountant', 150000, 4);
+
+INSERT INTO employee (firstName, lastName, role_id, manager_id)
+VALUES
+    ('John', 'Doe', 3, NULL),
+    ('Mike', 'Chan', 6, NULL),
+    ('Ashley', 'Rodriguez', 5, 2),
+    ('Kevin', 'Tupik', 9, NULL),
+    ('Tom', 'Allen', 11, NULL),
+    ('Sarah', 'Lourd', 10, 5),
+    ('Tammer', 'Galal', 8, 4),
+    ('Malia', 'Brown', 4, 3),
+    ('Johnny', 'Ramone', 1, 1),
+    ('Friedrich', 'Ramone', 2, 9);
