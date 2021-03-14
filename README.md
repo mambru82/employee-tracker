@@ -21,7 +21,7 @@
    1. run the server with `npm start`
    1. follow the instructions on the page
    1. you may exit the application with CTRL + C at any time
-   1. see the [linked video]() for a demonstration of the functionality
+   1. see the [linked video](https://github.com/mambru82/employee-tracker/blob/main/Employee_tracker_demo_v1.mp4) for a demonstration of the functionality
 
    ## Usage Information
    This application may be used or adapted as needed. The code is part of a Bootcamp assignment. No license is required.
