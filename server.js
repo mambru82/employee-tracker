@@ -13,84 +13,56 @@ const connection = mysql.createConnection({
 connection.connect(err => {
   if (err) throw err;
   console.log('connected as id ' + connection.threadId + '\n');
-  createProduct();
+  readEmployees();
 });
 
-createProduct = () => {
-  console.log('Inserting a new product...\n');
+createNewEmployee = () => {
+  console.log('Creating a new employee...\n');
   const query = connection.query(
-    'INSERT INTO products SET ?',
+    'INSERT INTO employee SET ?',
     {
-      flavor: 'Rocky Road',
-      price: 3.0,
-      quantity: 50
+      firstName: 'Eduardo',
+      lastName: 'Castro',
+      role_id: 5,
+      manager_id: 2
     },
     function(err, res) {
       if (err) throw err;
       console.log(res.affectedRows + ' product inserted!\n');
       // Call updateProduct() AFTER the INSERT completes
-      updateProduct();
-      deleteProduct();
-      readProducts();
     }
   );
   // logs the actual query being run
   console.log(query.sql);
 };
 
-updateProduct = () => {
-  console.log('Updating all Rocky Road quantities...\n');
-  // Update the quantity for 'Rocky Road' to 100
-  //
-  const updateSql = `UPDATE products
-  SET 
-    quantity = 100
-  WHERE flavor = "Rocky Road"`
-  const query = connection.query(updateSql, function(err, res) {
-    if (err) throw err;
-    console.log(res.affectedRows + ' product updated!\n');
-  })
-    // YOUR CODE HERE
-  //
-  // Include the callback function to catch any errors,
-  // log how many products were updated,
-  // and call deleteProduct() AFTER the UPDATE completes
-  //
-  // YOUR CODE HERE
-  //
 
-  // logs the actual query being run
-console.log(query.sql);
-};
-
-deleteProduct = () => {
-  console.log('Deleting all strawberry ice cream...\n');
+deleteEmployee = () => {
+  console.log('Deleting employee...\n');
   // Delete the flavor 'strawberry'
   //
   // YOUR CODE HERE
   //
-  const deleteStrawberry = `DELETE FROM products
-  WHERE flavor = "strawberry"`
+  const deleteStrawberry = `DELETE FROM employee
+  WHERE id = 1`
   const query = connection.query(deleteStrawberry, function(err, res) {
     if (err) throw err;
-    console.log(res.affectedRows + ' product deleted!\n');
-  })// Include the callback function to catch any errors,
-  // log how many products were deleted,
-  // and call the readProducts() AFTER the DELETE completes
-  //
-  // YOUR CODE HERE
-  //
-
-  // logs the actual query being run
+    console.log(res.affectedRows + ' employee deleted!\n');
+  })
   console.log(query.sql);
 };
 
-readProducts = () => {
+readEmployees = () => {
   console.log('Selecting all products...\n');
-  const sql = `SELECT * FROM products`;
+  const sql = `SELECT E.id, E.firstName, E.lastName, employee_role.title, employee_role.salary, department.dept_name,
+                IFNULL(CONCAT(m.lastName, ', ', m.firstName), 'Top Manager') AS 'Manager'
+                FROM employee E
+                LEFT JOIN employee_role ON E.role_id = employee_role.id
+                LEFT JOIN employee m ON m.id = E.manager_id
+                LEFT JOIN department ON employee_role.department_id = department.id;`;
   connection.query(sql, function(err, result, fields){
     if (err) throw err;
-    console.log(result);
+    console.table(result);
   })
   // Write a simple query that will SELECT everything from the 'products' table
   // Log the results in the console
